@@ -49,6 +49,14 @@ app.shortcut("summarize", async ({ shortcut, ack, client }) => {
                   },
                   value: "en",
                 },
+                {
+                  text: {
+                    type: "plain_text",
+                    text: "日本語",
+                    emoji: true,
+                  },
+                  value: "ja",
+                }
               ],
               action_id: "select-lang-action",
             },
