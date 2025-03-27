@@ -1,8 +1,21 @@
+const express = require("express"); // Import express
 const app = require("#configs/app");
 const { appLogger: logger } = require("#configs/logger");
 const generateEvents = require("#events/generateEvents");
 
 generateEvents();
+
+// Create a simple HTTP server to bind to a port
+const server = express();
+server.get("/", (req, res) => res.send("Service is running")); // Health check endpoint
+
+// Get the port from environment or default to 3000
+const PORT = process.env.PORT || 3000;
+
+// Start listening on the port
+server.listen(PORT, () => {
+  logger.log(`HTTP server is listening on port ${PORT}`);
+});
 
 async function shutdown() {
   const timeout = setTimeout(() => {
