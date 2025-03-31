@@ -12,6 +12,11 @@ server.get("/", (req, res) => res.send("Service is running")); // Health check e
 // Get the port from environment or default to 3000
 const PORT = process.env.PORT || 3000;
 
+// Add a health check route
+server.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // Start listening on the port
 server.listen(PORT, () => {
   logger.log(`HTTP server is listening on port ${PORT}`);
