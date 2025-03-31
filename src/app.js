@@ -1,4 +1,5 @@
 const express = require("express"); // Import express
+const https = require("https");
 const app = require("#configs/app");
 const { appLogger: logger } = require("#configs/logger");
 const generateEvents = require("#events/generateEvents");
@@ -48,3 +49,15 @@ process.on("unhandledRejection", (error) => {
   logger.log("⚡️ Bolt app is running!");
   logger.log("log level: ", logger.level);
 })();
+
+const SELF_URL = process.env.SELF_URL; // set this in Render env vars to your own service URL
+
+if (SELF_URL) {
+  setInterval(() => {
+    https.get(SELF_URL + "/healthz", (res) => {
+      logger.log("Self pinged /healthz: " + res.statusCode);
+    }).on("error", (err) => {
+      logger.error("Failed self ping: ", err.message);
+    });
+  }, 1000 * 60 * 14); // every 14 minutes
+}
