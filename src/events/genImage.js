@@ -20,12 +20,11 @@ app.command("/gen_image", async ({ command, ack, say }) => {
         },
       ],
     });
-    await app.client.files.upload({
-      channels: command.channel_id,
-      file: buffer,
+    await app.client.files.uploadV2({
+      channel_id: command.channel_id,
       filename: "image.png",
-      filetype: "auto",
       title: command.text,
+      file: buffer, // still a buffer or stream
     });
 
     logger.debug("/gen_image completed");
