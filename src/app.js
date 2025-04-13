@@ -59,5 +59,5 @@ if (SELF_URL) {
     }).on("error", (err) => {
       logger.error("Failed self ping: ", err.message);
     });
-  }, 1000 * 60 * 14); // every 14 minutes
+  }, 1000 * 60 * 9); // every 9 minutes
 }
